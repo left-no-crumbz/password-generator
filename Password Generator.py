@@ -2,6 +2,9 @@ import string, secrets, customtkinter
 import tkinter as tk
 
 
+customtkinter.set_appearance_mode("system")
+customtkinter.set_default_color_theme("dark-blue")
+
 class Password_Generator:
     def __init__(self):
         super().__init__()
@@ -15,19 +18,20 @@ class Password_Generator:
         self.main_font = ("Arial", 16)
         self.sub_font = ("Arial", 12)
         
-        customtkinter.set_appearance_mode("system")
-        customtkinter.set_default_color_theme("dark-blue")
-        
         self.root = customtkinter.CTk()
         self.root.geometry(f"{1100}x{580}")
         self.frame = customtkinter.CTkFrame(master=self.root)
         self.frame.pack(pady=20, padx=60, fill='both', expand=True)
         
+        self.empty = customtkinter.CTkLabel(self.frame, text="")
+        self.empty.pack(padx=12, pady=50)
+
+        
         self.title_label = customtkinter.CTkLabel(self.frame, text="Password Generator", font=self.title_font)
         self.title_label.pack(padx=12, pady=10)
         
         # Initializes the slider. The slider controls the password generation
-        self.password_length = customtkinter.CTkSlider(master=self.frame, from_=self.INITIAL_LENGTH, to=self.FINAL_LENGTH, orientation='horizontal', hover=True, command=self.generate_password)
+        self.password_length = customtkinter.CTkSlider(master=self.frame, from_=self.INITIAL_LENGTH, to=self.FINAL_LENGTH, orientation='horizontal', hover=True, command=self.generate_password, number_of_steps=38)
         self.password_length.pack(padx=12, pady=5)
         
         # Initializes the counter below the slider
@@ -108,6 +112,7 @@ class Password_Generator:
         self.popup = customtkinter.CTkLabel(master=self.frame, text='Copied to Clipboard!', font=self.sub_font, fg_color='transparent')
         self.popup.pack(padx=5, pady=5)
         self.popup.after(2000, self.popup.destroy)
+
 
 if __name__ == "__main__":
     app = Password_Generator()
